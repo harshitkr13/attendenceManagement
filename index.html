@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AttendEase – Student Attendance Management System with real-time tracking, analytics, and CSV export." />
+  <title>AttendEase – Student Attendance Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main Navigation">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">AttendEase</span>
+      </div>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <ul role="menubar">
+        <li role="none">
+          <a href="#" class="nav-item active" id="nav-dashboard" role="menuitem" data-page="dashboard" aria-current="page">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+              <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+              <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+              <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li role="none">
+          <a href="#" class="nav-item" id="nav-students" role="menuitem" data-page="students">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>Students</span>
+          </a>
+        </li>
+        <li role="none">
+          <a href="#" class="nav-item" id="nav-attendance" role="menuitem" data-page="attendance">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>Attendance</span>
+          </a>
+        </li>
+        <li role="none">
+          <a href="#" class="nav-item" id="nav-statistics" role="menuitem" data-page="statistics">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="18" cy="7" r="2" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="2" r="2" stroke="currentColor" stroke-width="2"/>
+              <circle cx="6" cy="16" r="2" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span>Statistics</span>
+          </a>
+        </li>
+        <li role="none">
+          <a href="#" class="nav-item" id="nav-reports" role="menuitem" data-page="reports">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="10" y1="9" x2="8" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>Reports</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="quick-stats">
+        <p class="qs-label">Today's Snapshot</p>
+        <div class="qs-row">
+          <span class="qs-tag present" id="sb-present">0 Present</span>
+          <span class="qs-tag absent" id="sb-absent">0 Absent</span>
+        </div>
+      </div>
+      <button class="restore-btn" id="restoreDemoBtn" aria-label="Restore demo data">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Restore Demo Data
+      </button>
+      <button class="reset-btn" id="resetAllBtn" aria-label="Reset all data">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <polyline points="3,3 3,8 8,8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Reset All Data
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ OVERLAY ═══════════════════ -->
+  <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+  <!-- ═══════════════════ MAIN WRAPPER ═══════════════════ -->
+  <div class="main-wrapper" id="mainWrapper">
+
+    <!-- ── TOP NAVBAR ── -->
+    <header class="topnav" role="banner">
+      <div class="topnav-left">
+        <button class="hamburger" id="hamburger" aria-label="Open sidebar" aria-expanded="false" aria-controls="sidebar">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="page-title-area">
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+          <p class="page-subtitle" id="pageSubtitle">Welcome back! Here's your attendance overview.</p>
+        </div>
+      </div>
+      <div class="topnav-right">
+        <div class="datetime-display">
+          <span class="live-date" id="liveDate"></span>
+          <span class="live-clock" id="liveClock"></span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <span class="theme-icon light-icon" aria-hidden="true">☀️</span>
+          <span class="theme-icon dark-icon" aria-hidden="true">🌙</span>
+        </button>
+        <button class="print-btn" id="printBtn" aria-label="Print attendance report" title="Print Report">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <polyline points="6,9 6,2 18,2 18,9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <rect x="6" y="14" width="12" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── CONTENT AREA ── -->
+    <main class="content-area" id="contentArea" role="main">
+
+      <!-- ════════ DASHBOARD PAGE ════════ -->
+      <section class="page active" id="page-dashboard" aria-labelledby="pageTitle">
+
+        <!-- Stat Row 1 -->
+        <div class="stat-grid">
+          <div class="stat-card card-total" role="region" aria-label="Total Students">
+            <div class="stat-card-bg"></div>
+            <div class="stat-content">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <p class="stat-label">Total Students</p>
+                <h2 class="stat-value" id="statTotal">0</h2>
+                <p class="stat-trend" id="statTotalTrend">Registered</p>
+              </div>
+            </div>
+            <div class="stat-wave"></div>
+          </div>
+
+          <div class="stat-card card-present" role="region" aria-label="Present Today">
+            <div class="stat-card-bg"></div>
+            <div class="stat-content">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <polyline points="22,4 12,14.01 9,11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <p class="stat-label">Present Today</p>
+                <h2 class="stat-value" id="statPresent">0</h2>
+                <p class="stat-trend" id="statPresentTrend">0% of total</p>
+              </div>
+            </div>
+            <div class="stat-wave"></div>
+          </div>
+
+          <div class="stat-card card-absent" role="region" aria-label="Absent Today">
+            <div class="stat-card-bg"></div>
+            <div class="stat-content">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <p class="stat-label">Absent Today</p>
+                <h2 class="stat-value" id="statAbsent">0</h2>
+                <p class="stat-trend" id="statAbsentTrend">0% of total</p>
+              </div>
+            </div>
+            <div class="stat-wave"></div>
+          </div>
+
+          <div class="stat-card card-avg" role="region" aria-label="Overall Attendance">
+            <div class="stat-card-bg"></div>
+            <div class="stat-content">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <line x1="18" y1="20" x2="18" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="12" y1="20" x2="12" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="6" y1="20" x2="6" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <p class="stat-label">Avg Attendance</p>
+                <h2 class="stat-value" id="statAvg">0%</h2>
+                <p class="stat-trend" id="statAvgTrend">Overall rate</p>
+              </div>
+            </div>
+            <div class="stat-wave"></div>
+          </div>
+        </div>
+
+        <!-- Stat Row 2 -->
+        <div class="stat-grid stat-grid-row2">
+          <div class="stat-card card-dept" role="region" aria-label="Total Departments">
+            <div class="stat-card-bg"></div>
+            <div class="stat-content">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <p class="stat-label">Departments</p>
+                <h2 class="stat-value" id="statDepts">0</h2>
+                <p class="stat-trend" id="statDeptsTrend">Active</p>
+              </div>
+            </div>
+            <div class="stat-wave"></div>
+          </div>
+
+          <div class="stat-card card-above90" role="region" aria-label="Above 90% Attendance">
+            <div class="stat-card-bg"></div>
+            <div class="stat-content">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <p class="stat-label">Above 90%</p>
+                <h2 class="stat-value" id="statAbove90">0</h2>
+                <p class="stat-trend" id="statAbove90Trend">Excellent</p>
+              </div>
+            </div>
+            <div class="stat-wave"></div>
+          </div>
+
+          <div class="stat-card card-below75" role="region" aria-label="Below 75% Attendance">
+            <div class="stat-card-bg"></div>
+            <div class="stat-content">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <p class="stat-label">Below 75%</p>
+                <h2 class="stat-value" id="statBelow75">0</h2>
+                <p class="stat-trend" id="statBelow75Trend">At risk</p>
+              </div>
+            </div>
+            <div class="stat-wave"></div>
+          </div>
+
+          <div class="stat-card card-records" role="region" aria-label="Total Records">
+            <div class="stat-card-bg"></div>
+            <div class="stat-content">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="2"/>
+                  <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <p class="stat-label">Att. Records</p>
+                <h2 class="stat-value" id="statRecords">0</h2>
+                <p class="stat-trend" id="statRecordsTrend">Total logs</p>
+              </div>
+            </div>
+            <div class="stat-wave"></div>
+          </div>
+        </div>
+
+        <!-- Dashboard Charts + Activity Grid -->
+        <div class="dashboard-grid">
+
+          <!-- Department Chart -->
+          <div class="glass-card chart-card" role="region" aria-label="Attendance by Department">
+            <div class="card-header">
+              <h3 class="card-title">By Department</h3>
+              <span class="card-badge">CSS Chart</span>
+            </div>
+            <div class="dept-chart" id="deptChart">
+              <div class="empty-chart">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <p>No data yet</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Semester Chart -->
+          <div class="glass-card chart-card" role="region" aria-label="Attendance by Semester">
+            <div class="card-header">
+              <h3 class="card-title">By Semester</h3>
+              <span class="card-badge">CSS Chart</span>
+            </div>
+            <div class="dept-chart" id="semChart">
+              <div class="empty-chart">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <p>No data yet</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="glass-card activity-card" role="region" aria-label="Recent Activity">
+            <div class="card-header">
+              <h3 class="card-title">Recent Activity</h3>
+              <button class="clear-activity-btn" id="clearActivityBtn" aria-label="Clear activity log">Clear</button>
+            </div>
+            <ul class="activity-list" id="activityList" aria-live="polite">
+              <li class="activity-empty">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <p>No recent activity</p>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Distribution Chart -->
+          <div class="glass-card chart-card" role="region" aria-label="Attendance Distribution">
+            <div class="card-header">
+              <h3 class="card-title">Distribution</h3>
+              <span class="card-badge">3 Bands</span>
+            </div>
+            <div class="dept-chart" id="distChart">
+              <div class="empty-chart">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <p>No data yet</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weekly Trend -->
+          <div class="glass-card weekly-card" role="region" aria-label="Weekly Attendance Trend">
+            <div class="card-header">
+              <h3 class="card-title">Weekly Trend</h3>
+              <span class="card-badge">Last 7 Days</span>
+            </div>
+            <div class="weekly-chart" id="weeklyChart">
+              <div class="empty-chart">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>No data yet</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats Panel -->
+          <div class="glass-card quick-panel" role="region" aria-label="Quick Statistics">
+            <div class="card-header">
+              <h3 class="card-title">Quick Stats</h3>
+            </div>
+            <div class="quick-stats-grid">
+              <div class="qs-item">
+                <span class="qs-item-label">Highest Attendee</span>
+                <span class="qs-item-val" id="qsHighest">—</span>
+              </div>
+              <div class="qs-item">
+                <span class="qs-item-label">Lowest Attendee</span>
+                <span class="qs-item-val" id="qsLowest">—</span>
+              </div>
+              <div class="qs-item">
+                <span class="qs-item-label">Departments</span>
+                <span class="qs-item-val" id="qsDepts">0</span>
+              </div>
+              <div class="qs-item">
+                <span class="qs-item-label">Semesters</span>
+                <span class="qs-item-val" id="qsSems">0</span>
+              </div>
+              <div class="qs-item">
+                <span class="qs-item-label">Perfect Attendance</span>
+                <span class="qs-item-val" id="qsPerfect">0</span>
+              </div>
+              <div class="qs-item">
+                <span class="qs-item-label">At Risk (&lt;75%)</span>
+                <span class="qs-item-val danger" id="qsAtRisk">0</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ════════ STUDENTS PAGE ════════ -->
+      <section class="page" id="page-students" aria-labelledby="pageTitle">
+
+        <!-- Toolbar -->
+        <div class="toolbar glass-card">
+          <div class="toolbar-search">
+            <div class="search-input-wrap">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <input type="search" id="searchInput" placeholder="Search name, roll, dept, semester…" aria-label="Search students" autocomplete="off" />
+            </div>
+          </div>
+          <div class="toolbar-filters">
+            <select id="filterDept" aria-label="Filter by department" class="filter-select">
+              <option value="">All Departments</option>
+            </select>
+            <select id="filterSem" aria-label="Filter by semester" class="filter-select">
+              <option value="">All Semesters</option>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+              <option value="7">Semester 7</option>
+              <option value="8">Semester 8</option>
+            </select>
+            <select id="filterStatus" aria-label="Filter by attendance status" class="filter-select">
+              <option value="">All Status</option>
+              <option value="present">Present</option>
+              <option value="absent">Absent</option>
+            </select>
+            <select id="filterPct" aria-label="Filter by attendance percentage" class="filter-select">
+              <option value="">All % Range</option>
+              <option value="above90">&gt;90% Excellent</option>
+              <option value="75to90">75–90% Good</option>
+              <option value="below75">&lt;75% At Risk</option>
+            </select>
+            <select id="sortBy" aria-label="Sort students" class="filter-select">
+              <option value="name">Sort: Name</option>
+              <option value="roll">Sort: Roll No.</option>
+              <option value="pct">Sort: Attendance %</option>
+              <option value="dept">Sort: Dept</option>
+              <option value="sem">Sort: Semester</option>
+            </select>
+            <button class="btn-export" id="exportBtn" aria-label="Export to CSV">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Export
+            </button>
+          </div>
+        </div>
+
+        <!-- Bulk Action Bar (visible when rows selected) -->
+        <div class="bulk-bar" id="bulkBar" role="toolbar" aria-label="Bulk actions">
+          <div class="bulk-info">
+            <span class="bulk-count" id="bulkCount">0 selected</span>
+          </div>
+          <div class="bulk-actions">
+            <button class="btn-bulk-action btn-bulk-present" id="bulkMarkPresent" aria-label="Mark selected present">
+              ✅ Mark Present
+            </button>
+            <button class="btn-bulk-action btn-bulk-absent" id="bulkMarkAbsent" aria-label="Mark selected absent">
+              ❌ Mark Absent
+            </button>
+            <button class="btn-bulk-action btn-bulk-export" id="bulkExport" aria-label="Export selected">
+              📊 Export
+            </button>
+            <button class="btn-bulk-action btn-bulk-delete" id="bulkDelete" aria-label="Delete selected">
+              🗑 Delete
+            </button>
+            <button class="btn-bulk-action btn-bulk-clear" id="bulkClear" aria-label="Clear selection">
+              ✕ Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Students Table -->
+        <div class="glass-card table-card">
+          <div class="table-header-row">
+            <span class="table-count" id="tableCount">0 students</span>
+            <div class="table-date-filter">
+              <label for="attendanceDate" class="date-label">Attendance Date:</label>
+              <input type="date" id="attendanceDate" aria-label="Select attendance date" />
+            </div>
+          </div>
+          <div class="table-wrap" role="region" aria-label="Students table" tabindex="0">
+            <table class="students-table" id="studentsTable">
+              <thead>
+                <tr>
+                  <th scope="col" class="col-check">
+                    <label class="custom-check" aria-label="Select all students">
+                      <input type="checkbox" id="selectAllCheck" />
+                      <span class="checkmark" aria-hidden="true"></span>
+                    </label>
+                  </th>
+                  <th scope="col" class="th-sort" data-sort="id">ID <span class="sort-icon" aria-hidden="true"></span></th>
+                  <th scope="col">Student</th>
+                  <th scope="col" class="th-sort" data-sort="roll">Roll No. <span class="sort-icon" aria-hidden="true"></span></th>
+                  <th scope="col" class="th-sort" data-sort="dept">Department <span class="sort-icon" aria-hidden="true"></span></th>
+                  <th scope="col" class="th-sort" data-sort="sem">Semester <span class="sort-icon" aria-hidden="true"></span></th>
+                  <th scope="col" class="th-sort" data-sort="seen">Last Seen <span class="sort-icon" aria-hidden="true"></span></th>
+                  <th scope="col">Status</th>
+                  <th scope="col" class="th-sort" data-sort="pct">Attendance <span class="sort-icon" aria-hidden="true"></span></th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody">
+                <!-- Rows populated by JS -->
+              </tbody>
+            </table>
+          </div>
+          <!-- Empty State -->
+          <div class="empty-state" id="emptyState" aria-live="polite">
+            <div class="empty-illustration" aria-hidden="true">
+              <svg viewBox="0 0 200 160" fill="none">
+                <ellipse cx="100" cy="140" rx="80" ry="12" fill="currentColor" opacity="0.06"/>
+                <rect x="40" y="30" width="120" height="90" rx="12" fill="currentColor" opacity="0.08"/>
+                <rect x="52" y="45" width="96" height="8" rx="4" fill="currentColor" opacity="0.15"/>
+                <rect x="52" y="61" width="72" height="6" rx="3" fill="currentColor" opacity="0.10"/>
+                <rect x="52" y="75" width="88" height="6" rx="3" fill="currentColor" opacity="0.10"/>
+                <rect x="52" y="89" width="60" height="6" rx="3" fill="currentColor" opacity="0.10"/>
+                <circle cx="152" cy="40" r="18" fill="url(#eg)" opacity="0.9"/>
+                <path d="M145 40l5 5 10-10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs>
+                  <linearGradient id="eg" x1="134" y1="22" x2="170" y2="58">
+                    <stop stop-color="#6366f1"/><stop offset="1" stop-color="#3b82f6"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <h3>No Students Found</h3>
+            <p>Add your first student using the <strong>+</strong> button below, or adjust your search filters.</p>
+          </div>
+        </div>
+
+        <!-- Pagination Bar -->
+        <div class="pagination-bar glass-card" id="paginationBar">
+          <div class="pagination-left">
+            <span class="pagination-info" id="paginationInfo">Showing 1–25 of 100 students</span>
+          </div>
+          <div class="pagination-right">
+            <select id="rowsPerPage" class="filter-select rows-select" aria-label="Rows per page">
+              <option value="10">10 / page</option>
+              <option value="25" selected>25 / page</option>
+              <option value="50">50 / page</option>
+              <option value="100">100 / page</option>
+            </select>
+            <button class="page-btn" id="prevPage" aria-label="Previous page" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <polyline points="15,18 9,12 15,6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <span class="page-indicator" id="pageIndicator">1 / 4</span>
+            <button class="page-btn" id="nextPage" aria-label="Next page">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <polyline points="9,18 15,12 9,6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ════════ ATTENDANCE PAGE ════════ -->
+      <section class="page" id="page-attendance" aria-labelledby="pageTitle">
+        <div class="glass-card attendance-header-card">
+          <div class="att-top">
+            <div>
+              <h3 class="card-title">Mark Attendance</h3>
+              <p class="card-sub">Select a date and mark attendance for each student.</p>
+            </div>
+            <div class="att-date-wrap">
+              <label for="attDatePicker" class="date-label">Select Date:</label>
+              <input type="date" id="attDatePicker" aria-label="Attendance date" />
+            </div>
+          </div>
+          <div class="att-bulk-actions">
+            <button class="btn-bulk btn-all-present" id="markAllPresent" aria-label="Mark all students present">✅ Mark All Present</button>
+            <button class="btn-bulk btn-all-absent" id="markAllAbsent" aria-label="Mark all students absent">❌ Mark All Absent</button>
+          </div>
+        </div>
+
+        <div class="glass-card table-card">
+          <div class="table-wrap" role="region" aria-label="Attendance table" tabindex="0">
+            <table class="students-table" aria-live="polite">
+              <thead>
+                <tr>
+                  <th scope="col">Student</th>
+                  <th scope="col">Roll No.</th>
+                  <th scope="col">Department</th>
+                  <th scope="col">Semester</th>
+                  <th scope="col">Present Days</th>
+                  <th scope="col">Attendance %</th>
+                  <th scope="col">Mark</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceTableBody"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="attEmptyState" aria-live="polite">
+            <div class="empty-illustration" aria-hidden="true">
+              <svg viewBox="0 0 200 160" fill="none">
+                <ellipse cx="100" cy="140" rx="80" ry="12" fill="currentColor" opacity="0.06"/>
+                <rect x="40" y="30" width="120" height="90" rx="12" fill="currentColor" opacity="0.08"/>
+                <rect x="52" y="45" width="96" height="8" rx="4" fill="currentColor" opacity="0.15"/>
+                <rect x="52" y="61" width="72" height="6" rx="3" fill="currentColor" opacity="0.10"/>
+              </svg>
+            </div>
+            <h3>No Students Yet</h3>
+            <p>Go to the Students section to add students first.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════ STATISTICS PAGE ════════ -->
+      <section class="page" id="page-statistics" aria-labelledby="pageTitle">
+
+        <!-- Mini stat cards -->
+        <div class="stats-mini-grid" id="statsMiniGrid">
+          <!-- populated by JS -->
+        </div>
+
+        <!-- Top 10 / Bottom 10 -->
+        <div class="top-bottom-grid">
+          <div class="glass-card rank-card" role="region" aria-label="Top 10 students">
+            <div class="card-header">
+              <h3 class="card-title">🏆 Top 10 Attendance</h3>
+              <span class="card-badge">Highest</span>
+            </div>
+            <div id="top10List" class="rank-list"></div>
+          </div>
+          <div class="glass-card rank-card" role="region" aria-label="Bottom 10 students">
+            <div class="card-header">
+              <h3 class="card-title">⚠️ Bottom 10 Attendance</h3>
+              <span class="card-badge">Lowest</span>
+            </div>
+            <div id="bottom10List" class="rank-list"></div>
+          </div>
+        </div>
+
+        <!-- Rankings -->
+        <div class="rankings-grid">
+          <div class="glass-card" role="region" aria-label="Department ranking">
+            <div class="card-header">
+              <h3 class="card-title">Department Ranking</h3>
+              <span class="card-badge">Avg %</span>
+            </div>
+            <div id="deptRankingChart" class="dept-chart"></div>
+          </div>
+          <div class="glass-card" role="region" aria-label="Semester ranking">
+            <div class="card-header">
+              <h3 class="card-title">Semester Ranking</h3>
+              <span class="card-badge">Avg %</span>
+            </div>
+            <div id="semRankingChart" class="dept-chart"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ════════ REPORTS PAGE ════════ -->
+      <section class="page" id="page-reports" aria-labelledby="pageTitle">
+        <div class="reports-grid">
+
+          <!-- Export Card -->
+          <div class="glass-card report-card">
+            <div class="card-header">
+              <h3 class="card-title">Export Reports</h3>
+            </div>
+            <div class="export-options">
+              <button class="btn-export-full" id="exportAllBtn" aria-label="Export all students to CSV">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Export All Students (CSV)
+              </button>
+              <button class="btn-export-full secondary" id="exportFilteredBtn" aria-label="Export filtered students to CSV">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Export Filtered Data (CSV)
+              </button>
+              <button class="btn-export-full tertiary" id="printReportBtn" aria-label="Print attendance report">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <polyline points="6,9 6,2 18,2 18,9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <rect x="6" y="14" width="12" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                Print Attendance Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Attendance Summary -->
+          <div class="glass-card report-card">
+            <div class="card-header">
+              <h3 class="card-title">Attendance Summary</h3>
+            </div>
+            <div class="summary-list" id="reportSummaryList">
+              <p class="no-report">No data available. Add students first.</p>
+            </div>
+          </div>
+
+          <!-- Detailed Records -->
+          <div class="glass-card report-card full-width">
+            <div class="card-header">
+              <h3 class="card-title">Detailed Attendance Records</h3>
+              <span class="card-badge" id="reportDate">All time</span>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Report table" tabindex="0">
+              <table class="students-table" id="reportTable">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Roll No.</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Semester</th>
+                    <th scope="col">Present Days</th>
+                    <th scope="col">Absent Days</th>
+                    <th scope="col">Attendance %</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="reportTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ═══════════════════ FAB ═══════════════════ -->
+  <button class="fab" id="fabAddStudent" aria-label="Add new student" title="Add Student">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <!-- ═══════════════════ ADD / EDIT STUDENT MODAL ═══════════════════ -->
+  <div class="modal-overlay" id="studentModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal" id="studentModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Add New Student</h2>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <form class="modal-form" id="studentForm" novalidate autocomplete="off">
+        <input type="hidden" id="editId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="studentName" class="form-label">Full Name <span aria-hidden="true">*</span></label>
+            <input type="text" id="studentName" class="form-input" placeholder="e.g. Harsh Sharma" required aria-required="true" />
+            <span class="form-error" id="nameError" role="alert"></span>
+          </div>
+          <div class="form-group">
+            <label for="rollNumber" class="form-label">Roll Number <span aria-hidden="true">*</span></label>
+            <input type="text" id="rollNumber" class="form-input" placeholder="e.g. 13000123101" required aria-required="true" />
+            <span class="form-error" id="rollError" role="alert"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="department" class="form-label">Department <span aria-hidden="true">*</span></label>
+            <input type="text" id="department" class="form-input" placeholder="e.g. CSE" required aria-required="true" list="deptSuggestions"/>
+            <datalist id="deptSuggestions">
+              <option value="CSE"><option value="IT"><option value="ECE">
+              <option value="EE"><option value="ME"><option value="Civil">
+              <option value="Chemical"><option value="Mathematics">
+            </datalist>
+            <span class="form-error" id="deptError" role="alert"></span>
+          </div>
+          <div class="form-group">
+            <label for="semester" class="form-label">Semester <span aria-hidden="true">*</span></label>
+            <select id="semester" class="form-input" required aria-required="true">
+              <option value="">Select Semester</option>
+              <option value="1">Semester 1</option><option value="2">Semester 2</option>
+              <option value="3">Semester 3</option><option value="4">Semester 4</option>
+              <option value="5">Semester 5</option><option value="6">Semester 6</option>
+              <option value="7">Semester 7</option><option value="8">Semester 8</option>
+            </select>
+            <span class="form-error" id="semError" role="alert"></span>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" id="cancelModal">Cancel</button>
+          <button type="submit" class="btn-primary" id="submitStudent">
+            <span id="submitBtnText">Add Student</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ CONFIRM DELETE MODAL ═══════════════════ -->
+  <div class="modal-overlay" id="confirmModalOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-hidden="true">
+    <div class="modal confirm-modal">
+      <div class="confirm-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="modal-title" id="confirmTitle">Delete Student?</h2>
+      <p class="confirm-msg" id="confirmMsg">This action cannot be undone. All attendance records for this student will also be deleted.</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="confirmCancel">Keep Student</button>
+        <button class="btn-danger" id="confirmDelete">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ RESET CONFIRM MODAL ═══════════════════ -->
+  <div class="modal-overlay" id="resetModalOverlay" role="dialog" aria-modal="true" aria-labelledby="resetTitle" aria-hidden="true">
+    <div class="modal confirm-modal">
+      <div class="confirm-icon danger-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="modal-title" id="resetTitle">Reset All Data?</h2>
+      <p class="confirm-msg">This will permanently delete ALL students and attendance records. This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="resetCancel">Cancel</button>
+        <button class="btn-danger" id="resetConfirm">Reset Everything</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ RESTORE DEMO MODAL ═══════════════════ -->
+  <div class="modal-overlay" id="restoreModalOverlay" role="dialog" aria-modal="true" aria-labelledby="restoreTitle" aria-hidden="true">
+    <div class="modal confirm-modal">
+      <div class="confirm-icon restore-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="modal-title" id="restoreTitle">Restore Demo Data?</h2>
+      <p class="confirm-msg">This will reload 100 demo students with realistic attendance records. Any custom data you have added will be lost.</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="restoreCancel">Cancel</button>
+        <button class="btn-primary" id="restoreConfirm">Restore Demo Data</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ TOAST CONTAINER ═══════════════════ -->
+  <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- ═══════════════════ LOADING OVERLAY ═══════════════════ -->
+  <div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
+    <div class="loader">
+      <div class="loader-ring"></div>
+      <p>Loading AttendEase…</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
